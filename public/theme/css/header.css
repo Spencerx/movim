@@ -7,6 +7,11 @@ header.big {
     position: relative;
 }
 
+header.big span.primary.icon a i,
+header.big span.control.icon a i {
+    color: white;
+}
+
 header.big.top {
     border-radius: 0 0 1rem 1rem;
     padding-top: 15rem;
