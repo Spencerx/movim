@@ -237,6 +237,8 @@ class Login extends Base
                 } else {
                     $this->rpc('Login.clearQuick');
                 }
+            } else {
+                $this->rpc('Login.clearQuick');
             }
         } catch (\Exception $e) {
             $this->rpc('Login.clearQuick');
