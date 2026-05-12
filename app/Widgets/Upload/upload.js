@@ -297,7 +297,7 @@ var Upload = {
 
         if (Upload.file != null) {
             const formData = new FormData();
-            formData.append('file', Upload.file, Upload.name);
+            formData.append(Upload.id, Upload.file, Upload.name);
             Upload.xhr.send(formData);
 
             Upload.setProgress('arrow_upload_ready', '');
@@ -341,7 +341,7 @@ var Upload = {
             Upload.preview(Upload.file);
         }
 
-        if (Chat.isEncrypted()) {
+        if (typeof Chat != 'undefined' && Chat.isEncrypted()) {
             document.querySelector('#upload').classList.add('encrypted');
         }
 

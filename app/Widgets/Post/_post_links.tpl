@@ -32,7 +32,7 @@
 {loop="$post->files"}
     <li>
         <span class="primary icon gray">
-            <span class="material-symbols">attach_file</span>
+            <span class="material-symbols">{if="$value->type"}{$value->type|mimeToIcon}{else}attach_file{/if}</span>
         </span>
         <div>
             <p class="line">

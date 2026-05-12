@@ -7,6 +7,8 @@ v0.33.2 (master)
 * Remove the invitation based Muji system and drop the XEP-0482: Call Invites
 * Conference calls UI improvements
 * Forbid the usage of non Controller Widgets via Ajax calls using a strict Controller widget list verification
+* Improved files enclosure support in Posts
+* Detect if an uploaded file "failed" (is empty)
 
 v0.33.1
 ---------------------------

@@ -80,7 +80,7 @@ class PublishStories extends Base
             ->setId(generateUUID())
             ->setFrom($this->me->id)
             ->setTitle($form->title->value)
-            ->addImage($upload->geturl, 'story', 'image/jpeg')
+            ->addEnclosure($upload->geturl, 'story', 'image/jpeg')
             ->setTags(getHashtags(htmlspecialchars($form->title->value)))
             ->request();
     }

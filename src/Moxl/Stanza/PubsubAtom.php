@@ -12,8 +12,8 @@ class PubsubAtom
     public $content;
     public $title;
 
-    public $links = [];
-    public $images = [];
+    public array $links = [];
+    public array $enclosures = [];
 
     public $contentxhtml = false;
 
@@ -135,16 +135,16 @@ class PubsubAtom
             $entry->appendChild($thr);
         }
 
-        foreach ($this->images as $image) {
-            if (is_array($image)) {
+        foreach ($this->enclosures as $enclosure) {
+            if (is_array($enclosure)) {
                 $link = $dom->createElement('link');
                 $link->setAttribute('rel', 'enclosure');
-                $link->setAttribute('href', $image['href']);
-                if ($image['type'] != null) {
-                    $link->setAttribute('type', $image['type']);
+                $link->setAttribute('href', $enclosure['href']);
+                if ($enclosure['type'] != null) {
+                    $link->setAttribute('type', $enclosure['type']);
                 }
-                if ($image['title'] != null) {
-                    $link->setAttribute('title', $image['title']);
+                if ($enclosure['title'] != null) {
+                    $link->setAttribute('title', $enclosure['title']);
                 }
                 $entry->appendChild($link);
             }

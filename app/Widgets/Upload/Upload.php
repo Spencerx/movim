@@ -72,6 +72,11 @@ class Upload extends Base
      * Internal functions called by UploadFile announce the XMPP file upload
      */
 
+    public function ajaxHttpError()
+    {
+        $this->toast($this->__('upload.error_failed'));
+    }
+
     public function ajaxHttpUploadXMPP(string $file)
     {
         $this->rpc('Upload.setProgress', 'cloud_upload', $this->__('upload.upload_xmpp'));

@@ -85,9 +85,9 @@ class PostPublish extends Action
         return $this;
     }
 
-    public function addImage($href, $title = null, $type = null)
+    public function addEnclosure(string $href, ?string $title = null, ?string $type = null)
     {
-        array_push($this->_atom->images, [
+        array_push($this->_atom->enclosures, [
             'href' => $href,
             'title' => $title,
             'type' => $type

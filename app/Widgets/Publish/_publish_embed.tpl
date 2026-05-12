@@ -37,6 +37,8 @@
         <span class="primary icon bubble gray">
             {if="$url->provider_icon"}
                 <img src="{$url->provider_icon}"/>
+            {elseif="$url->content_type"}
+                <i class="material-symbols">{$url->content_type|mimeToIcon}</i>
             {else}
                 <i class="material-symbols">link</i>
             {/if}
@@ -61,7 +63,7 @@
             </p>
             <p class="line">{$url->content_length|humanSize}</p>
         {else}
-            <p class="line">{$url->title}</p>
+            <p class="line">{if="$url->title"}{$url->title}{else}{$url->content_type|mimeToLabel}{/if}</p>
             <p class="line two" title="{if="!empty($url->description)"}{$url->description}{/if}">
                 {if="$url->provider_icon"}
                     <span class="icon bubble tiny">
@@ -78,6 +80,11 @@
                 {if="!empty($url->description)"}
                     <span class="second">•</span>
                     <span class="second">{$url->description}</span>
+                {/if}
+                {if="empty($url->title)"}
+                    <span class="second">{$url->content_length|humanSize}</span>
+                    <br />
+                    <a href="{$url->url}" target="_blank">{$url->url}</a>
                 {/if}
             </p>
         {/if}

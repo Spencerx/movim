@@ -33,11 +33,23 @@ class UploadFile extends Base
             'json' => rawurlencode(json_encode($json))
         ], await: false);
 
-        if (array_key_exists('file', $_FILES)) {
+        if (array_key_exists($upload->id, $_FILES)) {
             $browser = (new Browser())->withTimeout(10)
                 ->withFollowRedirects(true);
 
-            $filePath = $_FILES['file']['tmp_name'];
+            if ($_FILES[$upload->id]['size'] == 0) {
+                $json['b']['f'] = 'ajaxHttpError';
+
+                requestAPI('ajax', post: [
+                    'sid' => $this->me->session->id,
+                    'json' => rawurlencode(json_encode($json))
+                ], await: false);
+
+                http_response_code(503);
+                return;
+            }
+
+            $filePath = $_FILES[$upload->id]['tmp_name'];
             /*$fileSize = filesize($filePath);
             $fileUploaded = 0;
 
@@ -58,7 +70,7 @@ class UploadFile extends Base
             $browser->put(
                 $upload->puturl,
                 is_array($upload->headers) ? $upload->headers : [],
-                body: file_get_contents($filePath)//$file
+                body: file_get_contents($filePath) //$file
             )->then(
                 function (ResponseInterface $response) use ($upload) {
                     $upload->uploaded = true;

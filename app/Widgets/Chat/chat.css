@@ -774,6 +774,10 @@ ul.list li>div.bubble.file div.file {
     position: relative;
 }
 
+ul.list li.oppose>div.bubble.file div.file {
+    text-align: right;
+}
+
 li:not(.oppose) .bubble.file span.resource+div.file {
     margin-top: 1rem;
 }

@@ -245,8 +245,14 @@ class Publish extends Base
                 ) {
                     if (!$hasImage) $hasImage = true;
 
-                    $p->addImage(
+                    $p->addEnclosure(
                         $resolved->image,
+                        $resolved->title,
+                        $resolved->content_type
+                    );
+                } else if (!str_starts_with($resolved->content_type, 'text/html') || $resolved->type != 'text') {
+                    $p->addEnclosure(
+                        $resolved->url,
                         $resolved->title,
                         $resolved->content_type
                     );
@@ -257,7 +263,7 @@ class Publish extends Base
                     $p->addLink(
                         $embed->url,
                         $resolved->title,
-                        'text/html',
+                        $resolved->content_type,
                         $resolved->description,
                         $resolved->providerIcon
                     );
