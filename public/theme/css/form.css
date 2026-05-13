@@ -46,7 +46,7 @@ form > div textarea,
     box-sizing: border-box;
 }
 
-form > div .select:not(.multi):after {
+form > div .select:has(option:nth-child(2)):after {
     font-family: 'Material Symbols';
     content: "\e5c5";
     display: block;
@@ -76,6 +76,10 @@ form > div .select select {
     background-image: none;
     padding-bottom: 1rem;
     mask-image: linear-gradient(to right, black calc(100% - 15rem), transparent);
+}
+
+form > div .select:not(:has(option:nth-child(2))) {
+    pointer-events: none;
 }
 
 /* Placeholders to mimic FF */
