@@ -45,6 +45,8 @@ class UploadFile extends Base
                     'json' => rawurlencode(json_encode($json))
                 ], await: false);
 
+                \logError('Uploaded file is empty, check your PHP file upload limit');
+
                 http_response_code(503);
                 return;
             }
