@@ -198,6 +198,11 @@ main {
     flex-direction: row-reverse;
 }
 
+body[dir="rtl"] main {
+    left: 0;
+    right: auto;
+}
+
 @media print {
     main {
         display: block;

@@ -58,7 +58,7 @@ form > div .select:has(option:nth-child(2)):after {
     pointer-events: none;
 }
 
-*[dir="rtl"] form > div .select::after {
+*[dir="rtl"] form > div .select:has(option:nth-child(2))::after {
     left: 1.25rem;
     right: auto;
 }
@@ -76,6 +76,10 @@ form > div .select select {
     background-image: none;
     padding-bottom: 1rem;
     mask-image: linear-gradient(to right, black calc(100% - 15rem), transparent);
+}
+
+*[dir="rtl"] form > div .select select {
+    mask-image: linear-gradient(to left, black calc(100% - 15rem), transparent);
 }
 
 form > div .select:not(:has(option:nth-child(2))) {
@@ -491,7 +495,7 @@ li.action div.action .button {
 
     *[dir="rtl"] main > div:first-child:nth-last-child(2) + div .button.action {
         right: auto;
-        left: calc(75% + 2rem);
+        left: calc(75% - 3rem);
     }
 
     section#sidebar ~ * .button.action {
@@ -500,7 +504,7 @@ li.action div.action .button {
 
     *[dir="rtl"] section#sidebar ~ * .button.action {
         right: auto;
-        left: calc(50% - 14rem);
+        left: calc(50% - 21rem);
     }
 }
 

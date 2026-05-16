@@ -29,6 +29,11 @@ ul.list.compact>li>span.chip {
     top: 2rem;
 }
 
+*[dir="rtl"] ul.list.compact>li>span.chip {
+    left: 1rem;
+    right: auto;
+}
+
 ul.list.controls>li {
     padding: 0;
 }
@@ -130,6 +135,11 @@ ul.list li .primary:not(.bubble)[onclick] {
     margin-left: -1.5rem;
 }
 
+*[dir="rtl"] ul.list li .primary:not(.bubble)[onclick] {
+    margin-right: -1.5rem;
+    margin-left: auto;
+}
+
 ul.list li.primary ul.list.compact>li .primary {
     width: 5rem;
 }
@@ -150,7 +160,8 @@ ul.list:not(.navigation) li>span.control:last-of-type:not(:has(>.checkbox)):not(
     margin-right: -1.5rem;
 }
 
-*[dir="rtl"] ul.list li>span.control:last-of-type {
+
+*[dir="rtl"] ul.list:not(.navigation) li>span.control:last-of-type:not(:has(>.checkbox)):not(.toggleable) {
     margin-right: 0;
     margin-left: -1.5rem;
 }
@@ -745,6 +756,11 @@ header ul.context_menu {
     opacity: 0;
     pointer-events: none;
     min-width: 25rem;
+}
+
+body[dir="rtl"] header ul.context_menu {
+    left: 0;
+    right: auto;
 }
 
 header ul.list.context_menu li {
