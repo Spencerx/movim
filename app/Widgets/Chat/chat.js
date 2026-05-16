@@ -1177,8 +1177,14 @@ var Chat = {
                 let refreshP = document.querySelector('#id' + data.id + ' p.encrypted');
                 if (refreshP) {
                     if (plaintext) {
-                        let linkified = MovimUtils.linkify(plaintext);
-                        refreshP.innerHTML = ChatOmemo.searchEncryptedFile(linkified);
+                        if (typeof refreshP.setHTML == 'function') {
+                            let linkified = MovimUtils.linkify(plaintext);
+                            refreshP.setHTML(ChatOmemo.searchEncryptedFile(linkified));
+                        } else {
+                            // Safari doesn't support setHTML yet...
+                            refreshP.innerText = ChatOmemo.searchEncryptedFile(linkified);
+                        }
+
                         refreshP.classList.remove('encrypted');
                     } else {
                         refreshP.classList.add('error');
@@ -1656,7 +1662,7 @@ var Chat = {
                 let refreshP = document.querySelector('#parent' + parent.id + ' p');
                 if (refreshP) {
                     if (plaintext) {
-                        refreshP.innerHTML = plaintext;
+                        refreshP.innerText = plaintext;
                     } else {
                         refreshP.classList.add('error');
                     }
