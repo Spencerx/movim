@@ -1182,7 +1182,7 @@ var Chat = {
                             refreshP.setHTML(ChatOmemo.searchEncryptedFile(linkified));
                         } else {
                             // Safari doesn't support setHTML yet...
-                            refreshP.innerText = ChatOmemo.searchEncryptedFile(linkified);
+                            refreshP.innerText = ChatOmemo.searchEncryptedFile(plaintext);
                         }
 
                         refreshP.classList.remove('encrypted');
