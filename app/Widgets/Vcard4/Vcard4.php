@@ -2,6 +2,7 @@
 
 namespace App\Widgets\Vcard4;
 
+use App\User;
 use Movim\Widget\Base;
 
 use Moxl\Xec\Action\Vcard4\Get;
@@ -24,7 +25,7 @@ class Vcard4 extends Base
 
         $contact = \App\Contact::firstOrNew(['id' => $jid]);
 
-        $vcardform->assign('me', $this->me);
+        $vcardform->assign('me', User::where('id', $this->me->id)->first());
         $vcardform->assign('contact', $contact);
         $vcardform->assign('desc', trim($contact->description ?? ''));
         $vcardform->assign('countries', getCountries());
