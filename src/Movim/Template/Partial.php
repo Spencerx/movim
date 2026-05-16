@@ -25,9 +25,9 @@ class Partial extends Tpl
         $this->assign('c', $widget);
     }
 
-    public function draw($templateFilePath, $toString = true)
+    public function draw($templateFilePath, $toString = true): string
     {
-        return parent::draw($templateFilePath, true);
+        return (string)parent::draw($templateFilePath, true);
     }
 
     public function cache(string $templateFilePath, string $key)

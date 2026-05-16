@@ -2,6 +2,8 @@
 
 namespace Moxl\Stanza;
 
+use App\Contact;
+
 class Vcard4
 {
     public static $node = 'urn:xmpp:vcard4';
@@ -25,7 +27,7 @@ class Vcard4
         return $pubsub;
     }
 
-    public static function set($data, bool $withPublishOption = true)
+    public static function set(Contact $data, bool $withPublishOption = true)
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $pubsub = $dom->createElementNS('http://jabber.org/protocol/pubsub', 'pubsub');
@@ -38,57 +40,75 @@ class Vcard4
         $item->setAttribute('id', 'current');
         $publish->appendChild($item);
 
-        $vcard = $dom->createElement('vcard');
+        $vcard = null;
+
+        if ($data->vcard_xml) {
+            $domExtensions = new \DOMDocument('1.0', 'UTF-8');
+            $domExtensions->loadXML(str_replace('xmlns="urn:ietf:params:xml:ns:vcard-4.0"', '', $data->vcard_xml));
+            $vcard = $dom->importNode($domExtensions->documentElement, true);
+        } else {
+            $vcard = $dom->createElement('vcard');
+        }
+
         $vcard->setAttribute('xmlns', 'urn:ietf:params:xml:ns:vcard-4.0');
         $item->appendChild($vcard);
 
         if (isset($data->fn)) {
+            $vcard->getElementsByTagname('fn')->item(0)?->remove();
             $fn = $dom->createElement('fn');
             $fn->appendChild($dom->createElement('text', $data->fn));
             $vcard->appendChild($fn);
         }
 
         if (isset($data->pronouns)) {
+            $vcard->getElementsByTagname('pronouns')->item(0)?->remove();
             $pronouns = $dom->createElement('pronouns');
             $pronouns->appendChild($dom->createElement('text', $data->pronouns));
             $vcard->appendChild($pronouns);
         }
 
         if (isset($data->name)) {
+            $vcard->getElementsByTagname('nickname')->item(0)?->remove();
             $nickname = $dom->createElement('nickname');
             $nickname->appendChild($dom->createElement('text', $data->name));
             $vcard->appendChild($nickname);
         }
 
         if (isset($data->date)) {
+            $vcard->getElementsByTagname('bday')->item(0)?->remove();
             $bday = $dom->createElement('bday');
             $bday->appendChild($dom->createElement('date', $data->date));
             $vcard->appendChild($bday);
         }
 
         if (isset($data->url)) {
+            $vcard->getElementsByTagname('url')->item(0)?->remove();
             $url = $dom->createElement('url');
             $url->appendChild($dom->createElement('uri', $data->url));
             $vcard->appendChild($url);
         }
 
         if (isset($data->description)) {
+            $vcard->getElementsByTagname('note')->item(0)?->remove();
             $note = $dom->createElement('note');
             $note->appendChild($dom->createElement('text', $data->description));
             $vcard->appendChild($note);
         }
 
+        $vcard->getElementsByTagname('impp')->item(0)?->remove();
         $impp = $dom->createElement('impp');
-        $impp->appendChild($dom->createElement('uri', 'xmpp:' . $data->jid));
+        $impp->appendChild($dom->createElement('uri', 'xmpp:' . $data->id));
         $vcard->appendChild($impp);
 
         if (isset($data->email)) {
+            $vcard->getElementsByTagname('email')->item(0)?->remove();
             $email = $dom->createElement('email');
             $email->appendChild($dom->createElement('text', $data->email));
             $vcard->appendChild($email);
         }
 
         if (isset($data->adrcountry) || isset($data->adrlocality) || isset($data->adrpostalcode)) {
+            $vcard->getElementsByTagname('adr')->item(0)?->remove();
             $adr = $dom->createElement('adr');
 
             if (isset($data->adrlocality)) {

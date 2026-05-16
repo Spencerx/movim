@@ -19,7 +19,7 @@ class Vcard4 extends Base
         $this->registerEvent('vcard4_set_handle', 'onMyVcard4', 'configuration');
     }
 
-    public function prepareForm(string $jid)
+    public function prepareForm(string $jid): string
     {
         $vcardform = $this->tpl();
 
@@ -64,43 +64,43 @@ class Vcard4 extends Base
 
     public function ajaxVcardSubmit($vcard)
     {
-        $c = $this->me->contact;
+        $contact = $this->me->contact;
 
-        $c->name = null;
+        $contact->name = null;
 
         if (Validator::stringType()->notEmpty()->isValid($vcard->name->value)) {
-            $c->name = $vcard->name->value;
+            $contact->name = $vcard->name->value;
             $n = $this->xmpp(new Nickname);
-            $n->setNickname($c->name)
+            $n->setNickname($contact->name)
                 ->request();
         }
 
-        $c->date = Validator::date('Y-m-d')->isValid($vcard->date->value)
+        $contact->date = Validator::date('Y-m-d')->isValid($vcard->date->value)
             ? $vcard->date->value
             : null;
 
-        $c->fn = $vcard->fn->value;
-        $c->pronouns = $vcard->pronouns->value;
+        $contact->fn = $vcard->fn->value;
+        $contact->pronouns = $vcard->pronouns->value;
 
-        $c->url = Validator::url()->notEmpty()->isValid($vcard->url->value)
+        $contact->url = Validator::url()->notEmpty()->isValid($vcard->url->value)
             ? $vcard->url->value
             : null;
 
-        $c->adrlocality     = $vcard->locality->value;
-        $c->adrcountry      = $vcard->country->value;
+        $contact->adrlocality     = $vcard->locality->value;
+        $contact->adrcountry      = $vcard->country->value;
 
-        $c->email   = Validator::email()->notEmpty()->isValid($vcard->email->value)
+        $contact->email   = Validator::email()->notEmpty()->isValid($vcard->email->value)
             ? $vcard->email->value
             : null;
 
-        $c->description = trim($vcard->desc->value);
+        $contact->description = trim($vcard->desc->value);
 
-        $c->save();
+        $contact->save();
 
-        $c->id = $this->me->id;
+        $contact->id = $this->me->id;
 
-        $r = $this->xmpp(new Set);
-        $r->setData($c)->request();
+        $setVcard = $this->xmpp(new Set);
+        $setVcard->setData($contact)->request();
     }
 
     public function display()

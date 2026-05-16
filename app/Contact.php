@@ -214,8 +214,10 @@ class Contact extends Model
         $this->tunetrack = (string)$stanza->items->item->tune->track;
     }
 
-    public function setVcard4($vcard)
+    public function setVcard4(\SimpleXMLElement $vcard)
     {
+        $this->vcard_xml = $vcard->asXML();
+
         $this->date = (isset($vcard->bday->date)
             && Validator::date('Y-m-d')->isValid((string)$vcard->bday->date))
             ? (string)$vcard->bday->date
